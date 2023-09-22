@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import PropTypes from 'prop-types';
 import { Link, Outlet } from 'react-router-dom';
 
@@ -16,12 +16,14 @@ const FilmCard = ({ filmData }) => {
   return (
     <>
       <div className="row border-bottom py-3">
-        <div className="col-4">
-          <img
-            src={`http://image.tmdb.org/t/p/w300${poster_path}`}
-            className="img-thumbnail img-fluid"
-            alt={`${title}`}
-          />
+        <div className="col-4 ">
+          <div className="poster-thumb">
+            <img
+              src={`http://image.tmdb.org/t/p/w300${poster_path}`}
+              className="img-cover img-fluid "
+              alt={`${title}`}
+            />
+          </div>
         </div>
         <div className="col-6 d-flex flex-column justify-content-between">
           <div className="flex-grow-1">
@@ -70,7 +72,9 @@ const FilmCard = ({ filmData }) => {
       </div>
       <div className="row py-3">
         <div className="col">
-          <Outlet />
+          <Suspense fallback={<div>Loading...</div>}>
+            <Outlet />
+          </Suspense>
         </div>
       </div>
     </>
@@ -80,7 +84,7 @@ const FilmCard = ({ filmData }) => {
 FilmCard.propTypes = {
   filmData: PropTypes.shape({
     title: PropTypes.string.isRequired,
-    poster_path: PropTypes.string.isRequired,
+    poster_path: PropTypes.string,
     overview: PropTypes.string.isRequired,
     release_date: PropTypes.string.isRequired,
     genres: PropTypes.array.isRequired,

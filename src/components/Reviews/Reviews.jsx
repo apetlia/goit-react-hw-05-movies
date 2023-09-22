@@ -8,15 +8,12 @@ const Reviews = () => {
   const [state, setState] = useState('pending');
 
   useEffect(() => {
-    fetchData(`/movie/${movieId}/reviews`)
+    fetchData(`/3/movie/${movieId}/reviews`)
       .then(data => {
         setReviews(data.data.results);
         setState('resolved');
       })
-      .catch(err => {
-        console.log(err);
-        setState('rejected');
-      });
+      .catch(err => setState('rejected'));
   }, [movieId]);
 
   if (state === 'pending') {

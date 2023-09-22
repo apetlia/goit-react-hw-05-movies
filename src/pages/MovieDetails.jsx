@@ -12,15 +12,12 @@ const MovieDetails = () => {
   const { movieId } = useParams();
 
   useEffect(() => {
-    fetchData(`/movie/${movieId}`)
+    fetchData(`/3/movie/${movieId}`)
       .then(data => {
         setFilmData(data.data);
         setState('resolved');
       })
-      .catch(err => {
-        console.log(err);
-        setState('rejected');
-      });
+      .catch(err => setState('rejected'));
   }, [movieId]);
 
   return (
